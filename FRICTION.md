@@ -46,3 +46,20 @@ Docker Compose 5.5.1, uv 0.13.8, GNU Make 4.4.1.
 10. **`_merge` applies every key a model returns.** Useful (a stage that returns only
     `id, date, amount, note` cannot touch vendor), but a model that ignores the contract and
     echoes full rows can swap two rows' values, and nothing in the card says which stage did it.
+11. **Stock is noisy, so the headline delta is noisy.** On the identical messy file (seed 4242,
+    sha `8be9c6cd28d0`) stock scored 59.1, 52.7, 47.3, 45.2, 40.9 and 31.2 across six fights.
+    The final scored run's stock (24.4%, seed 462585) kept 2 junk rows. A single-fight delta can
+    move 20+ points on stock alone; the card could show stock's spread, or run stock twice.
+12. **qwen2.5:1.5b is partly on CPU during a fight.** With qwen2.5:3b resident, `ollama ps` showed
+    `qwen2.5:1.5b 1.4 GB 64%/36% CPU/GPU` on a 4 GB card. The card's "Model weights loaded" is
+    disk size and says nothing about where a model actually ran.
+
+## Otari
+
+- Dashboard at http://localhost:8000 and per-key usage worked. What I looked for and did not
+  find: request and response bodies (to debug a stage I needed the model's actual reply), a
+  per-model breakdown inside a key (my team key mixes qwen2.5:1.5b and qwen2.5:3b), and
+  time-to-first-token or tokens/s per model, which is what I wanted for the pound-for-pound call.
+- Mild confusion: the referee switches models on in Otari for you; `make fight` logged
+  "Otari discovered qwen2.5:0.5b on ollama" for models no team used, which made me check
+  whether they counted toward my weights (they do not).

@@ -99,3 +99,50 @@ Per-stage evidence (each row differs from final by one stage):
   held-out seeds below.
 - Splitting the work (final) beats the knowledge-rich single cleaner (E1) by 17.2 points on
   the same file.
+
+## Held-out validation (official fights, PRESET=medium ROWS=50)
+
+| seed | stock (same fight) | final | delta | final s | plus-check | delta | plus-check s |
+|---|---|---|---|---|---|---|---|
+| 4242 | 52.7 / 31.2 | 87.1 | +34.4 | 123 | 89.2 | +58.0 | 182 |
+| 1717 | 57.3 / 56.1 | 76.8 | +19.5 | 89 | 82.9 | +26.8 | 121 |
+| 90210 | 68.0 / 59.2 | 81.6 | +13.6 | 83 | 82.5 | +23.3 | 121 |
+| 31337 | 67.8 / 63.2 | 83.9 | +16.1 | 74 | 85.1 | +21.9 | 127 |
+| mean | 58.1 (8 fights) | **82.4** | | **92** | 84.9 | | 138 |
+
+Runs: 1717 `20261127T102724090200Z` / `20261127T103030366958Z`, 90210 `20261127T103406305692Z` /
+`20261127T103711177378Z`, 31337 `20261127T104048114778Z` / `20261127T104334689325Z`.
+
+The final team beat stock on every seed with 0 duplicates, 0 junk, 0 real rows dropped on all
+held-out seeds. The verify stage helps on 4/4 seeds, but only by 0.9 to 6.1 points (mean +2.5)
+for +50% time and +10 requests. **Decision: no verify stage.** Every stage that remains is worth
+20+ points in its ablation, and the team stays faster than stock.
+
+## Pound for pound (means over the 4 seeds above)
+
+| team | weights | mean net repair | net repair per GB | mean request s | net repair per 100 s |
+|---|---|---|---|---|---|
+| stock | 1.93 GB | 58.1 | 30.1 | ~96 | 60.5 |
+| **final (dedupe-format-lookup)** | 2.92 GB | 82.4 | 28.2 | 92 | **89.6** |
+| final plus check | 2.92 GB | 84.9 | 29.1 | 138 | 61.5 |
+| final minus dedupe (4242 only) | 1.93 GB | 65.6 | 34.0 | 76 | 86.3 |
+| all qwen2.5:1.5b (harness, 3 seeds) | 0.99 GB | 66.8 | 67.5 | ~200* | - |
+
+*harness timing, includes the 1.5b loop on seed 1717.
+
+Net repair *gained over stock* per GB: final (82.4 - 58.1) / 2.92 = **+8.3 points per GB**. The extra
+1 GB (qwen2.5:1.5b for dedupe) is what buys the dedupe stage's ~20 points; dropping it raises
+per-GB efficiency but loses ~17 points of repair. The all-1.5b team is the most efficient per
+GB but repairs 15 points less than final; I chose repair.
+
+Memory: qwen2.5:3b (1.9 GB on disk, 2.2 GB loaded) + qwen2.5:1.5b (1.0 GB, 1.4 GB loaded),
+with stock's qwen2.5:3b shared. Under 4 GB of model memory, far inside 16 GB. On the 4 GB GPU,
+`ollama ps` showed qwen2.5:1.5b split 64%/36% CPU/GPU while qwen2.5:3b held the VRAM.
+
+## Final scored run (`make fight`, defaults)
+
+Run `20261127T105124875965Z`, random seed 462585, 59 messy rows, 90 problems. Team 75.6% (73/90
+fixed, 5 broken, 0 dup, 0 junk, 0 dropped) in 85 s, 22 requests, 2.92 GB. Stock 24.4% (44/90,
+22 broken incl. 2 junk rows kept) in 101 s. Delta +51.2; stock's low score here is noise (see the
+4242 spread), the held-out mean delta is about +21. 100% local, stock sha `13571dac3037`, answer-key
+check clean, `uv run fight.py check-card fight-card.json` -> PASS. Team sha `e4f20eda099e`.
