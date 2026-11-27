@@ -1,35 +1,17 @@
-# Your team. This is the file you edit.
-#
-# Rows flow through the stages in order. Four stage types:
-#   map     one model, rows in batches of `batch`, with `prompt` as its instructions.
-#           A model may add keys (like a tag) or mark a row "drop": true.
-#   route   split rows by the value of a column (`by`) and send each group to the stage
-#           named in `to`. "*" catches the rest; without "*", unmatched rows pass through
-#           untouched (cheap: rows tagged ok skip every model). Targets run only on their group.
-#   vote    several `models` answer for one `column`; the majority wins, ties go to the first.
-#   verify  one model re-checks rows against the clean sample; `retry` re-sends rows it flags.
-#
-# Any Ollama model name works (it is pulled if missing). A model written as
-# otari-ai:<vendor>/<model> (for example otari-ai:openai/gpt-oss-120b) goes to otari.ai through the same gateway, costs money, and
-# the fight card marks those rows as not processed locally.
-#
-# Prompts are markdown files; {sample} inside one is replaced by 20 clean reference rows.
-# The referee reads the last JSON array in each reply. Ids are never the model's to change.
-
-name: small-batches
-# The stock team with one change: batches of 5 instead of 10. On the reference machine that
-# alone took the cleaner from 21 lost rows to 0. Start here, then try a second model, a route,
-# a vote on the category column, or your own prompts. See teams/triage-and-route.yml for an
-# architecture that lost, and why.
+name: dedupe-format-lookup
 stages:
-  - name: clean
+  - name: dedupe
+    type: map
+    model: qwen2.5:1.5b
+    batch: 30
+    prompt: prompts/dedupe.md
+  - name: format
     type: map
     model: qwen2.5:3b
     batch: 5
-    prompt: prompts/clean.md
-
-  - name: check
-    type: verify
+    prompt: prompts/format.md
+  - name: lookup
+    type: map
     model: qwen2.5:3b
     batch: 5
-    prompt: prompts/check.md
+    prompt: prompts/lookup.md

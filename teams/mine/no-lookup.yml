@@ -1,0 +1,13 @@
+# Ablation: team.yml without the lookup stage (vendor and category left to nobody).
+name: no-lookup
+stages:
+  - name: dedupe
+    type: map
+    model: qwen2.5:1.5b
+    batch: 30
+    prompt: ../../prompts/dedupe.md
+  - name: format
+    type: map
+    model: qwen2.5:3b
+    batch: 5
+    prompt: ../../prompts/format.md

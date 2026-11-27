@@ -1,0 +1,12 @@
+name: e1-knowledge-prompt
+stages:
+  - name: clean
+    type: map
+    model: qwen2.5:3b
+    batch: 5
+    prompt: ../../prompts/fix.md
+  - name: check
+    type: verify
+    model: qwen2.5:3b
+    batch: 5
+    prompt: ../../prompts/check.md

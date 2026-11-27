@@ -1,0 +1,7 @@
+name: dd-only
+stages:
+  - name: dedupe
+    type: map
+    model: qwen2.5:0.5b
+    batch: 20
+    prompt: ../../prompts/dedupe.md

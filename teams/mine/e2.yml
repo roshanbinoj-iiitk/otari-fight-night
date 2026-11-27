@@ -1,0 +1,17 @@
+name: e2-split
+stages:
+  - name: format
+    type: map
+    model: qwen2.5:3b
+    batch: 5
+    prompt: ../../prompts/format.md
+  - name: lookup
+    type: map
+    model: qwen2.5:3b
+    batch: 5
+    prompt: ../../prompts/lookup.md
+  - name: check
+    type: verify
+    model: qwen2.5:3b
+    batch: 5
+    prompt: ../../prompts/check.md

@@ -1,0 +1,13 @@
+# Ablation: team.yml without the dedupe stage.
+name: no-dedupe
+stages:
+  - name: format
+    type: map
+    model: qwen2.5:3b
+    batch: 5
+    prompt: ../../prompts/format.md
+  - name: lookup
+    type: map
+    model: qwen2.5:3b
+    batch: 5
+    prompt: ../../prompts/lookup.md
