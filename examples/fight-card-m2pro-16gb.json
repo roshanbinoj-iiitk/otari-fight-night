@@ -1,0 +1,152 @@
+{
+  "generated_at": "2026-11-20T20:04:15+00:00",
+  "dataset": {
+    "seed": 20261120,
+    "preset": "medium",
+    "rows": 50,
+    "messy_rows": 63,
+    "sha256": "f244b6558da5"
+  },
+  "machine": {
+    "os": "macOS 26.5.2",
+    "arch": "arm64",
+    "python": "3.13.7",
+    "cpu": "Apple M2 Pro",
+    "ram_gb": 16,
+    "gpu": "Apple M2 Pro",
+    "gpu_note": "unified memory"
+  },
+  "gateway": {
+    "otari_url": "http://localhost:8000",
+    "otari_version": "0.54.0",
+    "ollama_version": "0.40.2"
+  },
+  "stock": {
+    "name": "stock",
+    "file": "teams/stock.yml",
+    "sha256": "13571dac3037",
+    "models": [
+      "qwen2.5:3b"
+    ],
+    "repair_pct": 40.9,
+    "problems": 88,
+    "fixed": 54,
+    "broken": 18,
+    "accuracy_pct": 80.4,
+    "per_column_repair_pct": {
+      "date": 83.3,
+      "vendor": 57.1,
+      "amount": 72.2,
+      "category": 31.6,
+      "note": 50.0
+    },
+    "dup_kept": 0,
+    "dropped": 0,
+    "junk_kept": 3,
+    "rows_out": 53,
+    "seconds": 129.7,
+    "requests": 14,
+    "unparsed_rows": 21,
+    "failed_requests": 0,
+    "refused_drops": 35,
+    "weights_gb": 1.93,
+    "repair_per_gb": 21.2,
+    "local_requests_pct": 100.0,
+    "otari_usage": {
+      "requests": 14,
+      "errors": 0,
+      "prompt_tokens": 19875,
+      "completion_tokens": 7948,
+      "avg_gateway_latency_ms": 9212,
+      "cost_usd": 0.0
+    },
+    "stages": [
+      {
+        "name": "clean",
+        "model": "qwen2.5:3b",
+        "requests": 7,
+        "rows": 63,
+        "seconds": 54.7,
+        "unparsed": 16,
+        "failed_requests": 0,
+        "local_requests": 7
+      },
+      {
+        "name": "check",
+        "model": "qwen2.5:3b",
+        "requests": 7,
+        "rows": 63,
+        "seconds": 75.1,
+        "unparsed": 5,
+        "failed_requests": 0,
+        "local_requests": 7
+      }
+    ]
+  },
+  "team": {
+    "name": "small-batches",
+    "file": "team.yml",
+    "sha256": "ae6f6df082b8",
+    "models": [
+      "qwen2.5:3b"
+    ],
+    "repair_pct": 47.7,
+    "problems": 88,
+    "fixed": 57,
+    "broken": 15,
+    "accuracy_pct": 82.3,
+    "per_column_repair_pct": {
+      "date": 91.7,
+      "vendor": 38.1,
+      "amount": 88.9,
+      "category": 42.1,
+      "note": 50.0
+    },
+    "dup_kept": 0,
+    "dropped": 0,
+    "junk_kept": 2,
+    "rows_out": 52,
+    "seconds": 124.1,
+    "requests": 26,
+    "unparsed_rows": 11,
+    "failed_requests": 0,
+    "refused_drops": 47,
+    "weights_gb": 1.93,
+    "repair_per_gb": 24.7,
+    "local_requests_pct": 100.0,
+    "otari_usage": {
+      "requests": 26,
+      "errors": 0,
+      "prompt_tokens": 30946,
+      "completion_tokens": 7148,
+      "avg_gateway_latency_ms": 4739,
+      "cost_usd": 0.0
+    },
+    "stages": [
+      {
+        "name": "clean",
+        "model": "qwen2.5:3b",
+        "requests": 13,
+        "rows": 63,
+        "seconds": 59.9,
+        "unparsed": 8,
+        "failed_requests": 0,
+        "local_requests": 13
+      },
+      {
+        "name": "check",
+        "model": "qwen2.5:3b",
+        "requests": 13,
+        "rows": 61,
+        "seconds": 64.1,
+        "unparsed": 3,
+        "failed_requests": 0,
+        "local_requests": 13
+      }
+    ]
+  },
+  "result": {
+    "delta_points": 6.8,
+    "winner": "small-batches"
+  }
+}

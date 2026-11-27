@@ -1,0 +1,21 @@
+id,date,vendor,amount,category,note
+S0001,2026-10-28,Metro Transit,21.90,transport,paid by card
+S0002,2026-08-21,Cable Depot,174.15,office,
+S0003,2026-01-27,Cable Depot,96.91,office,
+S0004,2026-05-24,Desk Depot,131.28,office,
+S0005,2026-01-01,Starlight Cinema,99.18,entertainment,
+S0006,2026-11-07,Clear Vision Optics,293.08,health,auto-pay
+S0007,2026-08-16,Clearwater Utility,109.51,utilities,monthly
+S0008,2026-05-01,Cable Depot,184.75,office,auto-pay
+S0009,2026-03-21,Noodle House,19.78,dining,shared with roommate
+S0010,2026-09-27,Summit Dental,128.31,health,gift
+S0011,2026-09-13,Paper Trail Supply,107.21,office,receipt attached
+S0012,2026-11-06,Wellness Clinic,224.03,health,shared with roommate
+S0013,2026-08-22,Blue Fork Bistro,94.74,dining,auto-pay
+S0014,2026-06-16,Greenleaf Pharmacy,193.03,health,reimbursable
+S0015,2026-11-06,Summit Dental,205.87,health,
+S0016,2026-09-28,Clearwater Utility,123.02,utilities,shared with roommate
+S0017,2026-08-09,Starlight Cinema,60.63,entertainment,auto-pay
+S0018,2026-09-25,City Cab Co,35.24,transport,
+S0019,2026-06-19,Desk Depot,207.20,office,receipt attached
+S0020,2026-06-14,Print Hub,3.34,office,auto-pay

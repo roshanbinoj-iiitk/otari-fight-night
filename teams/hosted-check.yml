@@ -1,0 +1,57 @@
+# Your team. This is the file you edit.
+#
+# Rows flow through the stages in order. Four stage types:
+#   map     one model, rows in batches of `batch`, with `prompt` as its instructions.
+#           A model may add keys (like a tag) or mark a row "drop": true.
+#   route   split rows by the value of a column (`by`) and send each group to the stage
+#           named in `to`. "*" catches the rest. Target stages run only on their group.
+#   vote    several `models` answer for one `column`; the majority wins, ties go to the first.
+#   verify  one model re-checks rows against the clean sample; `retry` re-sends rows it flags.
+#
+# Any Ollama model name works (it is pulled if missing). A model written as
+# otari-ai:<vendor>/<model> goes to otari.ai through the same gateway, costs money, and
+# the fight card marks those rows as not processed locally.
+#
+# Prompts are markdown files; {sample} inside one is replaced by 20 clean reference rows.
+# The referee reads the last JSON array in each reply. Ids are never the model's to change.
+
+name: hosted-check
+stages:
+  - name: triage
+    type: map
+    model: qwen2.5:3b
+    batch: 15
+    prompt: ../prompts/triage.md
+
+  - name: route
+    type: route
+    by: tag
+    to:
+      junk: junk
+      date: dates
+      "*": cleaner
+
+  - name: junk
+    type: map
+    model: qwen2.5:3b
+    batch: 20
+    prompt: ../prompts/clean.md
+
+  - name: dates
+    type: map
+    model: llama3.2:3b
+    batch: 10
+    prompt: ../prompts/dates.md
+
+  - name: cleaner
+    type: map
+    model: qwen2.5:3b
+    batch: 5
+    prompt: ../prompts/clean.md
+
+  - name: check
+    type: verify
+    model: otari-ai:openai/gpt-oss-120b
+    batch: 10
+    prompt: ../prompts/check.md
+    retry: 1

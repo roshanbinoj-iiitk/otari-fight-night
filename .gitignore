@@ -1,0 +1,13 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.superpowers/
+fight-card.md
+fight-card.json
+fight-log.jsonl
+data/golden.csv
+data/messy.csv
+*.clean.csv
+runs/

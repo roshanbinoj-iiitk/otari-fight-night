@@ -1,0 +1,9 @@
+# Controlled variant of team.yml: same cleaner, with the check stage removed.
+# If you edit your starter's cleaner, make the same edit here before comparing.
+name: no-verifier
+stages:
+  - name: clean
+    type: map
+    model: qwen2.5:3b
+    batch: 5
+    prompt: ../prompts/clean.md

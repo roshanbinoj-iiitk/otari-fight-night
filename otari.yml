@@ -1,0 +1,22 @@
+# Otari gateway config. You should not need to edit this: models live in team.yml.
+master_key: ${OTARI_MASTER_KEY}
+
+# Local models cost nothing; without this Otari refuses unpriced traffic with a 402.
+require_pricing: false
+
+# Ollama runs on your machine, not in Docker, so the GPU is used. The referee
+# switches every model your team files name on under this provider before a fight.
+# otari.ai, if you set OTARI_AI_KEY in .env, is added at runtime as hosted provider "otari-ai".
+hosted_providers:
+  ollama:
+    api_base: ${OLLAMA_URL_FROM_DOCKER}
+
+# One scoped key per team, so the dashboard and the usage API split every
+# request between the stock team and yours.
+api_keys:
+  team:
+    secret: ${TEAM_KEY}
+    user_id: team
+  stock:
+    secret: ${STOCK_KEY}
+    user_id: stock

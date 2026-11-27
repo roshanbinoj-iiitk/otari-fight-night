@@ -1,0 +1,46 @@
+# An architecture that sounds smart and lost to the stock team on the reference machine
+# (28.4% vs 42.0%, seed 20261120). Read its stage table on the card: triage tagged dirty rows
+# "ok" so they skipped every model, and the dates specialist never received a row. Fix the
+# triage prompt, or route on something a 3B model can judge, and this team may win. Try it:
+#   TEAM=teams/triage-and-route.yml make fight
+name: triage-and-route
+stages:
+  - name: triage
+    type: map
+    model: qwen2.5:3b
+    batch: 15
+    prompt: ../prompts/triage.md
+
+  - name: route
+    type: route
+    by: tag
+    to:
+      junk: junk
+      date: dates
+      dirty: cleaner
+      # rows tagged ok pass through untouched
+
+  - name: junk
+    type: map
+    model: qwen2.5:3b
+    batch: 20
+    prompt: ../prompts/clean.md
+
+  - name: dates
+    type: map
+    model: llama3.2:3b
+    batch: 10
+    prompt: ../prompts/dates.md
+
+  - name: cleaner
+    type: map
+    model: qwen2.5:3b
+    batch: 5
+    prompt: ../prompts/clean.md
+
+  - name: check
+    type: verify
+    model: qwen2.5:3b
+    batch: 10
+    prompt: ../prompts/check.md
+    retry: 0

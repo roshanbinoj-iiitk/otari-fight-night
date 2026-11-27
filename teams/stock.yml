@@ -1,0 +1,16 @@
+# The stock team. Every fight runs this first, on your machine, so your team has a baseline
+# to beat. Deliberately simple: one cleaner, one checker, one model. Its prompts live in
+# teams/stock/ so editing prompts/ for your own team never changes the baseline. The card
+# prints its sha256 (yml plus prompts); organizers publish the official value.
+name: stock
+stages:
+  - name: clean
+    type: map
+    model: qwen2.5:3b
+    batch: 10
+    prompt: stock/clean.md
+  - name: check
+    type: verify
+    model: qwen2.5:3b
+    batch: 10
+    prompt: stock/check.md

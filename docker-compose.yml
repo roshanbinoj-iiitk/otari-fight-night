@@ -1,0 +1,13 @@
+services:
+  otari:
+    image: mzdotai/otari:0.54.0
+    ports: ["127.0.0.1:${GATEWAY_PORT:-8000}:8000"]  # dashboard and keys stay on this machine, not your network
+    env_file: .env
+    volumes:
+      - ./otari.yml:/app/config.yml:ro
+      - otari-data:/data
+    command: ["otari", "serve", "--config", "/app/config.yml"]
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+volumes:
+  otari-data:
